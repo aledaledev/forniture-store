@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ProductState } from "../../types";
 
-const initialState = {
+const initialState:ProductState = {
     products:[],
+    sortedProducts:[]
 }
 
 const productsSlice = createSlice({
