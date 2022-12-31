@@ -16,7 +16,7 @@ const ProductItem = ({name,category,colors,company,id,image,price,featured,shipp
         <br/>
         
         <li>{colors.map(color => {
-          return <div style={{background:color}}>{color}</div>
+          return <div key={color} style={{background:color}}>{color}</div>
         })}</li>
         <li>{maxQuantity}</li>
       </ul>

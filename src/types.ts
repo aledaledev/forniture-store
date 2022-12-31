@@ -11,7 +11,27 @@ export interface ProductProps {
     maxQuantity:number,
 }
 
+//product
 export interface ProductState {
     products:ProductProps[],
-    sortedProducts:ProductProps[]
+    sortedProducts:ProductProps[],
+    companies:string[],
+    categories:string[],
+    prices:{
+        maxPrice:number,
+        minPrice:number,
+    }
+}
+
+
+//form
+export interface FormState{
+    sort: string,
+    filter:{
+        category:string,
+        company:string,
+        priceRange: number, 
+        featured: boolean,
+        freeShipping:boolean,
+    }
 }
