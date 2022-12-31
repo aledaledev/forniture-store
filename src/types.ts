@@ -15,6 +15,7 @@ export interface ProductProps {
 export interface ProductState {
     products:ProductProps[],
     sortedProducts:ProductProps[],
+    filteredProducts:ProductProps[],
     companies:string[],
     categories:string[],
     prices:{
@@ -25,13 +26,16 @@ export interface ProductState {
 
 
 //form
+
+export interface FilterState {
+    category:string,
+    company:string,
+    priceRange: number, 
+    featured: boolean,
+    freeShipping:boolean,
+}
+
 export interface FormState{
     sort: string,
-    filter:{
-        category:string,
-        company:string,
-        priceRange: number, 
-        featured: boolean,
-        freeShipping:boolean,
-    }
+    filter: FilterState,
 }

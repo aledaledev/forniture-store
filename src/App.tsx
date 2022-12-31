@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Header from './components/Header';
 import ProductContainer from './components/ProductContainer';
 import ProductsFilters from './components/ProductsFilters';
 import { setInfo, setProducts } from './features/products/productsSlice';
-import { ProductState } from './types';
 import getData from './utils/getData';
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
     loadData()
     
   },[])
-
 
   return (
     <div>
