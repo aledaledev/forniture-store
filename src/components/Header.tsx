@@ -1,11 +1,12 @@
 import React from 'react'
-import { InboxIcon } from '@primer/octicons-react';
+import { PackageIcon, RepoIcon } from '@primer/octicons-react';
 
 const Header = () => {
   return (
     <header>
       <span>Fortun</span>
-      <button><InboxIcon size={24} /></button>
+      <button><PackageIcon size={24} /></button>
+      <button><RepoIcon size={24} /></button>
     </header>
   )
 }

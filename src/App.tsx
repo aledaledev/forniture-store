@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
+import Cart from './components/Cart';
+import Favorite from './components/Favorite';
 import Header from './components/Header';
 import ProductContainer from './components/ProductContainer';
 import ProductsFilters from './components/ProductsFilters';
@@ -22,6 +24,8 @@ function App() {
 
   return (
     <div>
+      <Cart/>
+      <Favorite/>
       <Header/>
       <ProductsFilters/>
       <ProductContainer/>

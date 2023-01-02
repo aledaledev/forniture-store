@@ -24,9 +24,7 @@ export interface ProductState {
     }
 }
 
-
 //form
-
 export interface FilterState {
     category:string,
     company:string,
@@ -38,4 +36,33 @@ export interface FilterState {
 export interface FormState{
     sort: string,
     filter: FilterState,
+}
+
+//favorites
+
+export interface Favorite {
+    img:string,
+    name:string,
+    id:string,
+}
+
+export interface FavoriteState {
+    favorites: Favorite[]
+}
+
+//cart
+
+export interface Cart {
+    img:string,
+    name:string,
+    id:string,
+    price:number,
+    maxQuantity:number,
+    quantity?:number
+} 
+
+export interface CartState {
+    cartProducts: Cart[],
+    totalQuantity:number,
+    totalPrice:number
 }
