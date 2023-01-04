@@ -24,8 +24,6 @@ function App() {
 
   return (
     <div>
-      <Cart/>
-      <Favorite/>
       <Header/>
       <ProductsFilters/>
       <ProductContainer/>

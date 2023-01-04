@@ -3,6 +3,7 @@ import { Favorite, FavoriteState } from "../../types";
 
 const initialState:FavoriteState = {
     favorites:[],
+    openFavorite:false
 }
 
 const favoriteSlice = createSlice({
@@ -14,9 +15,12 @@ const favoriteSlice = createSlice({
         },
         removeFav:(state,action:{type:string,payload:string}) => {
             state.favorites = state.favorites.filter(elem => elem.id!==action.payload)
+        },
+        openFavoriteContainer:(state,action) => {
+            state.openFavorite = action.payload
         }
     }
 })
 
-export const {addFav, removeFav} = favoriteSlice.actions
+export const {addFav, removeFav,openFavoriteContainer} = favoriteSlice.actions
 export default favoriteSlice.reducer

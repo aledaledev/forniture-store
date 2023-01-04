@@ -1,8 +1,9 @@
 import { BookmarkFillIcon, BookmarkSlashFillIcon } from '@primer/octicons-react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { FavBody, FavHeader, FavoriteSc } from '../assets/styles/Favorite.styles'
 import { addToCart, removeItem } from '../features/cart/cartSlice'
-import { removeFav } from '../features/favorite/favoriteSlice'
+import { openFavoriteContainer, removeFav } from '../features/favorite/favoriteSlice'
 import { CartState, FavoriteState, ProductState } from '../types'
 
 const Favorite = () => {
@@ -10,12 +11,14 @@ const Favorite = () => {
   const {favorite,cart,products} = useSelector(store => store) as {favorite:FavoriteState,cart:CartState,products:ProductState}
 
   const [hover, setHover] = useState('')
-
   
   return (
-    <div>
-      <h5>favorites</h5>
-      <div>
+    <FavoriteSc>
+      <FavHeader>
+        <h5>favorites</h5>
+        <button onClick={()=>dispatch(openFavoriteContainer(false))}>x</button>
+      </FavHeader>
+      <FavBody>
         {favorite.favorites.map(({img,name,id}) => {
           
           const inCart = cart.cartProducts.some(item => item.id ===id)
@@ -29,8 +32,13 @@ const Favorite = () => {
             <button onClick={() => dispatch(addToCart({id,img,name,price,maxQuantity}))}>add to cart</button>}
           </div>
         })}
-      </div>
-    </div>
+      {favorite.favorites.length===0?
+        <div>
+          <h5>No favorites yet!</h5>
+        </div>
+      :null}
+      </FavBody>
+    </FavoriteSc>
   )
 }
 

@@ -47,7 +47,8 @@ export interface Favorite {
 }
 
 export interface FavoriteState {
-    favorites: Favorite[]
+    favorites: Favorite[],
+    openFavorite:boolean
 }
 
 //cart
@@ -64,5 +65,6 @@ export interface Cart {
 export interface CartState {
     cartProducts: Cart[],
     totalQuantity:number,
-    totalPrice:number
+    totalPrice:number,
+    openCart:boolean
 }

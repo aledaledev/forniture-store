@@ -1,6 +1,8 @@
+import { TrashIcon, XIcon } from '@primer/octicons-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, removeAll, removeItem, removeToCart, setTotals } from '../features/cart/cartSlice'
+import { BtnGroup, CartBody, CartFooter, CartHeader, CartItem, CartSc, Details, ItemQuantity } from '../assets/styles/Cart.styles'
+import { addToCart, openCartContainer, removeAll, removeItem, removeToCart, setTotals } from '../features/cart/cartSlice'
 import { CartState } from '../types'
 
 const Cart = () => {
@@ -12,12 +14,12 @@ const Cart = () => {
     dispatch(setTotals())
   },[cart])
 
-    return <div>
-      <div>
-        <h4>cart</h4>
-        <button>x</button>
-      </div>
-
+    return <CartSc>
+      <CartHeader>
+        <h5>cart</h5>
+        <button onClick={()=>dispatch(openCartContainer(false))}><XIcon size={24} /></button>
+      </CartHeader>
+      <CartBody>
       {cart.cartProducts.map(({id,img,name,price,maxQuantity,quantity}) => {
 
         const limitAdd = () => {
@@ -25,24 +27,34 @@ const Cart = () => {
           dispatch(addToCart({id,img,name,price,maxQuantity,quantity}))
         }
 
-        return <div key={id}>
-          <img width={225} src={img} alt={name} />
-          <p>{name}</p>
-          <div>
+        return <CartItem key={id}>
+          <img src={img} alt={name} />
+          <Details>
+            <p>{name}</p>
             <span>${price}</span>
-            <span>x{quantity}</span>
-            <span>stock: {maxQuantity}</span>
-            {maxQuantity===quantity?<span>max limit</span>:null}
-          </div>
+          </Details>
           <div>
-            <button onClick={limitAdd}>+</button>
-            <button onClick={() => dispatch(removeToCart(id))}>-</button>
-            <button onClick={() => dispatch(removeItem(id))}>remove item</button>
+            <ItemQuantity>
+              <span>(stock: {maxQuantity})</span>
+              {maxQuantity===quantity?<span>max limit</span>:null}
+            </ItemQuantity>
+            <BtnGroup>
+              <button onClick={limitAdd}>+</button>
+              <span>{quantity}</span>
+              <button onClick={() => dispatch(removeToCart(id))}>-</button>
+              <button onClick={() => dispatch(removeItem(id))}><TrashIcon size={24} /></button>
+            </BtnGroup>
           </div>
-        </div>
+        </CartItem>
       })}
+      {cart.cartProducts.length===0?
+      <div>
+        <h5>Cart is empty!</h5>
+      </div>:null}
+      </CartBody>
+      
       {cart.cartProducts.length!==0?
-      <>
+      <CartFooter>
       <div>
         <span>total</span>
         <span>${cart.totalPrice}</span>
@@ -51,12 +63,8 @@ const Cart = () => {
         <button>check</button>
         <button onClick={()=> dispatch(removeAll())}>remove all</button>
       </div>
-      </>:
-      <div>
-        <h5>cart is empty</h5>
-      </div>  
-      }
-    </div>
+      </CartFooter>:null}
+    </CartSc>
 }
 
 export default Cart

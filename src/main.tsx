@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import App from './App'
 import { store } from './app/store'
+import { GlobalStyle } from './assets/styles/App.styles'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
+    <GlobalStyle/>
     <Provider store={store}>
       <App />
     </Provider>
