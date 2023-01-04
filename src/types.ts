@@ -44,6 +44,7 @@ export interface Favorite {
     img:string,
     name:string,
     id:string,
+    company:string
 }
 
 export interface FavoriteState {

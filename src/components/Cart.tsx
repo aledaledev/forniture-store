@@ -31,7 +31,7 @@ const Cart = () => {
           <img src={img} alt={name} />
           <Details>
             <p>{name}</p>
-            <span>${price}</span>
+            <span>${price} e/u</span>
           </Details>
           <div>
             <ItemQuantity>

@@ -1,7 +1,7 @@
-import { BookmarkFillIcon, BookmarkSlashFillIcon } from '@primer/octicons-react'
+import { BookmarkFillIcon, BookmarkSlashFillIcon, XIcon } from '@primer/octicons-react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FavBody, FavHeader, FavoriteSc } from '../assets/styles/Favorite.styles'
+import { BtnGroup, FavBody, FavHeader, FavItem, FavoriteSc, InfoItem } from '../assets/styles/Favorite.styles'
 import { addToCart, removeItem } from '../features/cart/cartSlice'
 import { openFavoriteContainer, removeFav } from '../features/favorite/favoriteSlice'
 import { CartState, FavoriteState, ProductState } from '../types'
@@ -16,21 +16,26 @@ const Favorite = () => {
     <FavoriteSc>
       <FavHeader>
         <h5>favorites</h5>
-        <button onClick={()=>dispatch(openFavoriteContainer(false))}>x</button>
+        <button onClick={()=>dispatch(openFavoriteContainer(false))}><XIcon size={24} /></button>
       </FavHeader>
       <FavBody>
-        {favorite.favorites.map(({img,name,id}) => {
+        {favorite.favorites.map(({img,name,id,company}) => {
           
           const inCart = cart.cartProducts.some(item => item.id ===id)
           const {price,maxQuantity} = products.products.find(item => item.id ===id) as {price:number,maxQuantity:number}
           
-          return <div key={id} style={{display:'flex',gap:'1rem'}}>
-            <img width={150} src={img} alt={name} />
-            <p>{name}</p>
-            <button onClick={()=>dispatch(removeFav(id))} onMouseMove={()=>setHover(id)} onMouseLeave={()=>setHover('')}>{hover===id?<BookmarkSlashFillIcon size={24} />:<BookmarkFillIcon size={24}/>}</button>
-            {inCart?<button onClick={() => dispatch(removeItem(id))}>in cart already</button>:
-            <button onClick={() => dispatch(addToCart({id,img,name,price,maxQuantity}))}>add to cart</button>}
-          </div>
+          return <FavItem key={id} style={{display:'flex',gap:'1rem'}}>
+            <img src={img} alt={name} />
+            <InfoItem>
+              <p>{name}</p>
+              <span>{company}</span>
+            </InfoItem>
+            <BtnGroup>
+              <button onClick={()=>dispatch(removeFav(id))} onMouseMove={()=>setHover(id)} onMouseLeave={()=>setHover('')}>{hover===id?<BookmarkSlashFillIcon size={24} />:<BookmarkFillIcon size={24}/>}</button>
+              {inCart?<button onClick={() => dispatch(removeItem(id))}>Remove from cart</button>:
+              <button onClick={() => dispatch(addToCart({id,img,name,price,maxQuantity}))}>Add to cart</button>}
+            </BtnGroup>
+          </FavItem>
         })}
       {favorite.favorites.length===0?
         <div>

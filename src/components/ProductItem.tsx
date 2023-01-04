@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BookmarkFillIcon, BookmarkIcon } from '@primer/octicons-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFav, removeFav } from '../features/favorite/favoriteSlice'
 import { CartState, FavoriteState, ProductProps } from '../types'
-import { addToCart, removeToCart } from '../features/cart/cartSlice'
+import { addToCart, removeItem, removeToCart } from '../features/cart/cartSlice'
+import { Badges, Colors, Product, ProductInfo } from '../assets/styles/ProductItem.styles'
 
 const ProductItem = ({name,category,colors,company,id,image:img,price,featured,shipping,maxQuantity}:ProductProps) => {
+
+  const [onProduct, setOnProduct] = useState(false)
 
   const dispatch = useDispatch()
   const {favorite,cart} = useSelector(store => store) as {favorite:FavoriteState,cart:CartState}
@@ -15,33 +18,42 @@ const ProductItem = ({name,category,colors,company,id,image:img,price,featured,s
     if(isFavorite) {
       dispatch(removeFav(id))
     } else {
-      dispatch(addFav({img,name,id}))
+      dispatch(addFav({img,name,id,company}))
     }
   }
 
   const inCart = cart.cartProducts.some(item => item.id ===id)
 
   return (
-    <div key={id}>
-      <ul>
-        <button onClick={toggleFavorite}>{isFavorite?<BookmarkFillIcon size={24}/>:<BookmarkIcon size={24}/>}</button>
-        <img src={img} alt={name} style={{width:'18rem'}} />
-        <li>{name}</li>
-        <li>{category}</li>
-        <li>{company}</li>
-        <li>{price}</li>
-        <li>{featured?'featured':'common'}</li>
-        <li>{shipping?'free shipping':'no free shipping'}</li>
+    <Product onMouseEnter={() => setOnProduct(true)} onMouseLeave={() => setOnProduct(false)} key={id}>
+        {onProduct?<button onClick={toggleFavorite}>{isFavorite?<BookmarkFillIcon size={24}/>:<BookmarkIcon size={24}/>}</button>:null}
         
-        <br/>
+        <img src={img} alt={name} />
         
-        <li>{colors.map(color => {
-          return <div key={color} style={{background:color}}>{color}</div>
-        })}</li>
-        <li>{maxQuantity}</li>
-        {inCart?<button onClick={() => dispatch(removeToCart(id))}>remove cart</button>:<button onClick={() => dispatch(addToCart({id,img,name,price,maxQuantity}))}>add to cart</button>}
-      </ul>
-    </div>
+        <div>
+        <ProductInfo>
+          <p>{name}</p>
+          <span>$ {price}</span>
+        </ProductInfo>
+        
+        <Badges>
+          <span>{company}</span>
+          <span>{category}</span>
+          {featured?<span>featured</span>:null}
+          {shipping?<span>free shipping</span>:null}
+          {maxQuantity<4?<span>last {maxQuantity} units!</span>:null}
+        </Badges>
+
+        <Colors>
+          <p>colors:</p>
+          {colors.map(color => {
+          return <span key={color} style={{background:color}}></span>
+          })}
+        </Colors>
+        
+        {inCart?<button onClick={() => dispatch(removeItem(id))}>remove from cart</button>:<button onClick={() => dispatch(addToCart({id,img,name,price,maxQuantity}))}>add to cart</button>}
+        </div>
+    </Product>
   )
 }
 
