@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BtnGroup, CartBody, CartFooter, CartHeader, CartItem, CartSc, Details, ItemQuantity } from '../assets/styles/Cart.styles'
 import { addToCart, openCartContainer, removeAll, removeItem, removeToCart, setTotals } from '../features/cart/cartSlice'
+import { toggleModal } from '../features/modal/modalSlice'
 import { CartState } from '../types'
 
 const Cart = () => {
@@ -61,7 +62,7 @@ const Cart = () => {
       </div>
       <div>
         <button>check</button>
-        <button onClick={()=> dispatch(removeAll())}>remove all</button>
+        <button onClick={()=> dispatch((toggleModal()))}>remove all</button>
       </div>
       </CartFooter>:null}
     </CartSc>
