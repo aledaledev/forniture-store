@@ -5,7 +5,7 @@ import { openFavoriteContainer } from '../features/favorite/favoriteSlice';
 import { openCartContainer } from '../features/cart/cartSlice';
 import Cart from './Cart';
 import Favorite from './Favorite';
-import { CartState, FavoriteState, ProductState } from '../types';
+import { CartState, FavoriteState, FormState, ProductState } from '../types';
 import { HeaderSc } from '../assets/styles/Header.styles';
 import { NavLink, useLocation } from 'react-router-dom';
 import Modal from './Modal';
@@ -14,7 +14,7 @@ import { setPriceRange } from '../features/formProduct/formProductSlice';
 const Header = () => {
 
   const dispatch = useDispatch()
-  const {cart,favorite,products} = useSelector(store => store) as {cart:CartState, favorite:FavoriteState,products:ProductState}
+  const {cart,favorite,products,formProduct} = useSelector(store => store) as {cart:CartState, favorite:FavoriteState,products:ProductState,formProduct:FormState}
   const {removeModal} = useSelector((store:any) => store.modal) as {removeModal:boolean}
 
   const currentLocation = useLocation()
@@ -42,12 +42,12 @@ const Header = () => {
 
   useEffect(() => {
     
-    if(products.products.length>0){
+    if(products.products.length>0 && formProduct.filter.priceRange===0){
       const maxPrice = products.products.map(({price}) => price).reduce((prev,cur) => prev>cur?prev:cur)
       dispatch(setPriceRange(maxPrice))
     }
 
-  },[products])
+  },[products.products])
 
   return (
     <>
