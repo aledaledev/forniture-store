@@ -1,4 +1,5 @@
 export interface ProductProps {
+    description:string,
     name:string,
     price:number,
     id:string,
@@ -13,6 +14,7 @@ export interface ProductProps {
 
 //product
 export interface ProductState {
+    selectedProduct:ProductProps | null,
     products:ProductProps[],
     sortedProducts:ProductProps[],
     filteredProducts:ProductProps[],

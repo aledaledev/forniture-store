@@ -3,8 +3,9 @@ import { BookmarkFillIcon, BookmarkIcon } from '@primer/octicons-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFav, removeFav } from '../features/favorite/favoriteSlice'
 import { CartState, FavoriteState, ProductProps } from '../types'
-import { addToCart, removeItem, removeToCart } from '../features/cart/cartSlice'
+import { addToCart, openCartContainer, removeItem, removeToCart } from '../features/cart/cartSlice'
 import { Badges, Colors, Product, ProductInfo } from '../assets/styles/ProductItem.styles'
+import { Link } from 'react-router-dom'
 
 const ProductItem = ({name,category,colors,company,id,image:img,price,featured,shipping,maxQuantity}:ProductProps) => {
 
@@ -32,7 +33,7 @@ const ProductItem = ({name,category,colors,company,id,image:img,price,featured,s
         
         <div>
         <ProductInfo>
-          <p>{name}</p>
+          <Link to={`/product/${id}`} onClick={()=>dispatch(openCartContainer(false))}><p>{name}</p></Link>
           <span>$ {price}</span>
         </ProductInfo>
         

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { FilterState, ProductProps, ProductState } from "../../types";
 
 const initialState:ProductState = {
+    selectedProduct:null,
     products:[],
     sortedProducts:[],
     filteredProducts:[],
@@ -65,9 +66,12 @@ const productsSlice = createSlice({
                 array = array.filter(elem => elem.shipping===action.payload.freeShipping)
             }
             state.filteredProducts = array
+        },
+        selectProduct:(state,action) => {
+            state.selectedProduct=state.products.find(({id}) => id===action.payload) || null
         }
     }
 })
 
-export const {setProducts,setInfo,sortBy,filterBy} = productsSlice.actions
+export const {setProducts,setInfo,sortBy,filterBy,selectProduct} = productsSlice.actions
 export default productsSlice.reducer

@@ -40,7 +40,7 @@ const Cart = () => {
               {maxQuantity===quantity?<span>max limit</span>:null}
             </ItemQuantity>
             <BtnGroup>
-              <button onClick={limitAdd}>+</button>
+              <button onClick={() => limitAdd()}>+</button>
               <span>{quantity}</span>
               <button onClick={() => dispatch(removeToCart(id))}>-</button>
               <button onClick={() => dispatch(removeItem(id))}><TrashIcon size={24} /></button>
@@ -62,7 +62,7 @@ const Cart = () => {
       </div>
       <div>
         <button>check</button>
-        <button onClick={()=> dispatch((toggleModal()))}>remove all</button>
+        <button onClick={()=> dispatch(toggleModal())}>remove all</button>
       </div>
       </CartFooter>:null}
     </CartSc>
